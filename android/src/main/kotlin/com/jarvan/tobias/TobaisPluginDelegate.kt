@@ -55,6 +55,7 @@ class TobaisPluginDelegate : CoroutineScope {
 
     private fun auth(call: MethodCall, result: Result) {
         launch {
+            EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX)
             val authResult = doAuthTask(call.arguments as String)
             withContext(Dispatchers.Main) {
                 result.success(authResult.plus("platform" to "android"))
@@ -69,6 +70,7 @@ class TobaisPluginDelegate : CoroutineScope {
 
     private fun version(result: Result) {
         launch {
+            EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX)
             val version = doGetVersionTask()
             withContext(Dispatchers.Main) {
                 result.success(version)
@@ -77,6 +79,7 @@ class TobaisPluginDelegate : CoroutineScope {
     }
 
     private fun isAliPayInstalled(result: Result) {
+        EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX)
         val manager = activity?.packageManager
         if (manager != null) {
             val action = Intent(Intent.ACTION_VIEW)
